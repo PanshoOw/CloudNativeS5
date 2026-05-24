@@ -82,5 +82,4 @@ jobs:
                 ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
       
               echo "Deploy terminado"
-      
-            EOF
+              EOF
