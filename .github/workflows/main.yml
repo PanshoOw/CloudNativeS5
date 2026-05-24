@@ -59,8 +59,8 @@ jobs:
           
               ls -la ~/.ssh
 
-          - name: Debug SSH key
-          run: |
+      - name: Debug SSH key
+        run: |
           echo "Permisos:"
           ls -l ~/.ssh/id_rsa
       
