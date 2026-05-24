@@ -59,6 +59,19 @@ jobs:
           
               ls -la ~/.ssh
 
+          - name: Debug SSH key
+          run: |
+          echo "Permisos:"
+          ls -l ~/.ssh/id_rsa
+      
+          echo "Primera línea:"
+          head -1 ~/.ssh/id_rsa
+      
+          echo "Última línea:"
+          tail -1 ~/.ssh/id_rsa
+      
+          ssh-keygen -l -f ~/.ssh/id_rsa
+
       # Paso 6: Conectarse a EC2 y desplegar
       - name: SSH commands to deploy
         run: |
