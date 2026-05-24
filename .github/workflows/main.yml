@@ -50,16 +50,14 @@ jobs:
         run: |
           mkdir -p ~/.ssh
       
-          cat > ~/.ssh/id_rsa << 'KEY'
-            ${{ secrets.EC2_SSH_KEY }}
-            KEY
-      
-          chmod 600 ~/.ssh/id_rsa
-      
-          echo "Primera línea:"
-          head -1 ~/.ssh/id_rsa
-      
-          ssh-keygen -y -f ~/.ssh/id_rsa > /dev/null
+              cat > ~/.ssh/id_rsa << 'KEY'
+          ${{ secrets.EC2_SSH_KEY }}
+          KEY
+          
+              chmod 600 ~/.ssh/id_rsa
+              chmod 700 ~/.ssh
+          
+              ls -la ~/.ssh
 
       # Paso 6: Conectarse a EC2 y desplegar
       - name: SSH commands to deploy
@@ -70,23 +68,7 @@ jobs:
             -o UserKnownHostsFile=/dev/null \
             ${{ secrets.USER_SERVER }}@${{ secrets.EC2_HOST }} << 'EOF'
       
-          set -e
-      
-          echo "Conectado a EC2"
-      
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login \
-            -u "${{ secrets.DOCKERHUB_USERNAME }}" \
-            --password-stdin
+          echo "Conectado"
       
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
-      
-          docker stop my-app || true
-          docker rm my-app || true
-      
-          docker run -d \
-            --name my-app \
-            -p 8080:8080 \
-            ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
-      
-          echo "Deploy terminado"
           EOF
