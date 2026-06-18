@@ -1,0 +1,27 @@
+========================================
+        RESUMEN DE INSCRIPCIÓN
+========================================
+
+Número de resumen: 1
+Fecha de inscripción: 31-05-2026 17:25:27
+
+DATOS DEL ESTUDIANTE
+----------------------------------------
+Nombre: Francisco Villarzú
+Correo: francisco.villarzu@duocuc.cl
+
+CURSOS INSCRITOS
+----------------------------------------
+1. Java Spring Boot
+   Instructor: Carlos Soto
+   Duración: 40 horas
+   Costo: $50.000
+
+2. Docker desde cero
+   Instructor: María Torres
+   Duración: 24 horas
+   Costo: $35.000
+
+----------------------------------------
+TOTAL A PAGAR: $85.000
+----------------------------------------

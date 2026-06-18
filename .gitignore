@@ -31,3 +31,19 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Build
+target/
+
+# Oracle Wallet / credenciales
+Wallet_*/
+*.p12
+*.sso
+*.jks
+*.pem
+*.ora
+*.zip
+
+# Archivos locales sensibles
+application-local.properties
+application-secret.properties

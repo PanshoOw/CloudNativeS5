@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
@@ -95,6 +98,40 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
+
+        @ExceptionHandler(AmazonServiceException.class)
+        public ResponseEntity<ErrorResponse> manejarAmazonServiceException(
+                AmazonServiceException ex,
+                HttpServletRequest request) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_GATEWAY.value(),
+                "Error de servicio AWS S3",
+                "AWS S3 respondió con un error al procesar la solicitud.",
+                request.getRequestURI(),
+                List.of(ex.getErrorMessage())
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(errorResponse);
+        }
+
+        @ExceptionHandler(AmazonClientException.class)
+        public ResponseEntity<ErrorResponse> manejarAmazonClientException(
+                AmazonClientException ex,
+                HttpServletRequest request) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                "Error de conexión con AWS S3",
+                "No fue posible conectarse con AWS S3. Revise credenciales, región, bucket o estado del laboratorio.",
+                request.getRequestURI(),
+                List.of(ex.getMessage())
+        );
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(errorResponse);
+        }
 
     // Maneja cualquier error no controlado.
     @ExceptionHandler(Exception.class)
